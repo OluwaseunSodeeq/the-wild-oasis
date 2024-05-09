@@ -13,9 +13,9 @@ export async function getCabins() {
   return data;
 }
 
+// https://gawnumfigdpidwpzekmn.supabase.co/storage/v1/object/public/cabin-images/cabin-008.jpg
 export async function createEditCabin(newCabin, id) {
   const hasImagePath = newCabin.image?.startsWith?.(supabaseUrl);
-
   const imageName = `${Math.random()}-${newCabin.image.name}`.replaceAll(
     "/",
     ""
@@ -41,6 +41,15 @@ export async function createEditCabin(newCabin, id) {
   }
 
   // 2. Upload image
+
+  // const avatarFile = event.target.files[0];
+  // const { data, error } = await supabase.storage
+  //   .from("avatars")
+  //   .upload("public/avatar1.png", avatarFile, {
+  //     cacheControl: "3600",
+  //     upsert: false,
+  //   });
+
   if (hasImagePath) return data;
 
   const { error: storageError } = await supabase.storage

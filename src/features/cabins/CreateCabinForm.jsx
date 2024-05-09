@@ -22,8 +22,9 @@ function CreateCabinForm({ cabinToEdit = {} }) {
   const { errors } = formState;
 
   function onSubmit(data) {
+    console.log(data);
     const image = typeof data.image === "string" ? data.image : data.image[0];
-
+    console.log(image);
     if (isEditSession)
       editCabin(
         { newCabinData: { ...data, image }, id: editId },
@@ -127,6 +128,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
         <FileInput
           id="image"
           accept="image/*"
+          // placeholder="Choose an image"
           {...register("image", {
             required: isEditSession ? false : "This field is required",
           })}
