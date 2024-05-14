@@ -8,17 +8,15 @@ import {
   HiArrowDownOnSquare,
 } from "react-icons/hi2";
 
-import Tag from "ui/Tag";
-import Menus from "ui/Menus";
-import Modal from "ui/Modal";
-import ConfirmDelete from "ui/ConfirmDelete";
-import Table from "ui/Table";
-
-import { useDeleteBooking } from "features/bookings/useDeleteBooking";
-import { formatCurrency } from "utils/helpers";
-import { formatDistanceFromNow } from "utils/helpers";
-import { useCheckout } from "features/check-in-out/useCheckout";
+// import { useCheckout } from "features/check-in-out/useCheckout";
 import { format, isToday } from "date-fns";
+import Table from "../../ui/Table";
+import Tag from "../../ui/Tag";
+import Modal from "../../ui/Modal";
+import Menus from "../../ui/Menus";
+import ConfirmDelete from "../../ui/ConfirmDelete";
+import { useDeleteBooking } from "./useDeleteBooking";
+import { formatCurrency, formatDistanceFromNow } from "../../utils/helpers";
 
 // v1
 // const TableRow = styled.div`
@@ -70,12 +68,12 @@ function BookingRow({
     // numGuests,
     totalPrice,
     status,
-    guests: { fullName: guestName, email },
+    guest: { fullName: guestName, email },
     cabins: { name: cabinName },
   },
 }) {
   const { mutate: deleteBooking, isLoading: isDeleting } = useDeleteBooking();
-  const { mutate: checkout, isLoading: isCheckingOut } = useCheckout();
+  // const { mutate: checkout, isLoading: isCheckingOut } = useCheckout();
 
   const navigate = useNavigate();
 
@@ -136,8 +134,8 @@ function BookingRow({
 
             {status === "checked-in" && (
               <Menus.Button
-                onClick={() => checkout(bookingId)}
-                disabled={isCheckingOut}
+                // onClick={() => checkout(bookingId)}
+                // disabled={isCheckingOut}
                 icon={<HiArrowUpOnSquare />}
               >
                 Check out
@@ -148,9 +146,9 @@ function BookingRow({
             {/* <Menus.Button>Delete</Menus.Button> */}
 
             {/* Now it gets a bit confusing... */}
-            <Modal.Toggle opens="delete">
+            <Modal.open opens="delete">
               <Menus.Button icon={<HiTrash />}>Delete booking</Menus.Button>
-            </Modal.Toggle>
+            </Modal.open>
           </Menus.List>
         </Menus.Menu>
 
