@@ -1,7 +1,7 @@
 import styled from "styled-components";
 // import { format } from "date-fns";
 
-import { box } from "../../styles/GlobalStyles";
+// import { box } from "../../styles/GlobalStyles";
 import {
   HiOutlineChatBubbleBottomCenterText,
   HiOutlineCheckCircle,
@@ -14,7 +14,7 @@ import { Flag } from "../../ui/Flag";
 import DataItem from "../../ui/DataItem";
 
 const StyledBookingDataBox = styled.section`
-  ${box} /* padding: 3.2rem 4rem; */
+  // padding: 3.2rem 4rem;
   overflow: hidden;
 `;
 

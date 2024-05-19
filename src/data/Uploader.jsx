@@ -1,13 +1,13 @@
-import { cabins } from "./data-cabins";
-import { guest } from "./data-guests";
-import { bookings } from "./data-bookings";
+import { useState } from "react";
+import { isFuture, isPast, isToday } from "date-fns";
 
 import supabase from "../services/supabase";
 import { subtractDates } from "../utils/helpers";
 import Button from "../ui/Button";
 
-import { isFuture, isPast, isToday } from "date-fns";
-import { useState } from "react";
+import { cabins } from "./data-cabins";
+import { guest } from "./data-guests";
+import { bookings } from "./data-bookings";
 // const originalSettings = {
 //   minBookingLength: 3,
 //   maxBookingLength: 30,
@@ -15,6 +15,7 @@ import { useState } from "react";
 //   breakfastPrice: 15,
 // };
 
+// Delete
 async function deleteGuests() {
   const { error } = await supabase.from("guest").delete().gt("id", 0);
   if (error) console.log(error.message);
@@ -30,6 +31,7 @@ async function deleteBookings() {
   if (error) console.log(error.message);
 }
 
+// Create
 async function createGuests() {
   const { error } = await supabase.from("guest").insert(guest);
   if (error) console.log(error.message);
@@ -42,20 +44,17 @@ async function createCabins() {
 
 async function createBookings() {
   // Bookings need a guestId and a cabinId. We can't tell Supabase IDs for each object, it will calculate them on its own. So it might be different for different people, especially after multiple uploads. Therefore, we need to first get all guestIds and cabinIds, and then replace the original IDs in the booking data with the actual ones from the DB
-  // const { data: guestsIds } = await supabase
   const { data: guestsIds } = await supabase
     .from("guest")
     .select("id")
     .order("id");
-  console.log(guestsIds);
   const allGuestIds = guestsIds.map((cabin) => cabin.id);
   const { data: cabinsIds } = await supabase
     .from("cabins")
     .select("id")
     .order("id");
-  console.log(cabinsIds);
   const allCabinIds = cabinsIds.map((cabin) => cabin.id);
-  // console.log(allCabinIds, allGuestIds);
+
   const finalBookings = bookings.map((booking) => {
     // Here relying on the order of cabins, as they don't have and ID yet
     const cabin = cabins.at(booking.cabinId - 1);
@@ -88,15 +87,13 @@ async function createBookings() {
       ...booking,
       numNights,
       cabinPrice,
-      // extrasPrice,
+      extrasPrice,
       totalPrice,
       guestId: allGuestIds.at(booking.guestId - 1),
       cabinId: allCabinIds.at(booking.cabinId - 1),
       status,
     };
   });
-
-  console.log(finalBookings);
 
   const { error } = await supabase.from("bookings").insert(finalBookings);
   if (error) console.log(error.message);
@@ -135,9 +132,12 @@ export function Uploader() {
         padding: "8px",
         borderRadius: "5px",
         textAlign: "center",
+        display: "flex",
+        flexDirection: "column",
+        gap: "8px",
       }}
     >
-      <h3>DEV AREA</h3>
+      <h3>SAMPLE DATA</h3>
 
       <Button
         onClick={uploadAll}
@@ -145,17 +145,12 @@ export function Uploader() {
         disabled={isLoading}
         // disabled={true}
       >
-        Upload ALL sample data
+        Upload ALL
       </Button>
-      <p>Only run this only once!</p>
-      <p>
-        <em>(Cabin images need to be uploaded manually)</em>
-      </p>
-      <hr />
+
       <Button onClick={uploadBookings} disabled={isLoading}>
-        Upload CURRENT bookings
+        Upload bookings ONLY
       </Button>
-      <p>You can run this every day you develop the app</p>
     </div>
   );
 }
