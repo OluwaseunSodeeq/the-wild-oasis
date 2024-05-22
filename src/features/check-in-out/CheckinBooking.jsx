@@ -29,12 +29,12 @@ function CheckinBooking() {
   const [addBreakfast, setAddBreakfast] = useState(false);
 
   const { booking, isLoading } = useBooking();
-  const { mutate: checkin, isLoading: isCheckingIn } = useCheckin();
-  const moveBack = useMoveBack();
   const { isLoading: isLoadingSettings, settings } = useSettings();
 
   // Can't use as initial state, because booking will still be loading
   useEffect(() => setConfirmPaid(booking?.isPaid ?? false), [booking]);
+  const moveBack = useMoveBack();
+  const { checkin, isCheckingIn } = useCheckin();
 
   if (isLoading || isLoadingSettings) return <Spinner />;
 
@@ -75,7 +75,6 @@ function CheckinBooking() {
 
       <BookingDataBox booking={booking} />
 
-      {/* LATER */}
       {!hasBreakfast && (
         <Box>
           <Checkbox

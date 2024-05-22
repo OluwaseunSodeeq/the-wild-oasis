@@ -10,19 +10,6 @@ import ConfirmDelete from "../../ui/ConfirmDelete";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
 
-// v1;
-// const TableRow = styled.div`
-//   display: grid;
-//   /* grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr; */
-//   column-gap: 2.4rem;
-//   align-items: center;
-//   padding: 1.4rem 2.4rem;
-
-//   &:not(:last-child) {
-//     border-bottom: 1px solid var(--color-grey-100);
-//   }
-// `;
-
 const Img = styled.img`
   display: block;
   width: 6.4rem;
@@ -53,9 +40,8 @@ const Discount = styled.div`
 
 function CabinRow({ cabin }) {
   const { isDeleting, deleteCabin } = useDeleteCabin();
-  const { createCabin } = useCreateCabin();
-  // const { isCreating, createCabin } = useCreateCabin();
-  // console.log(isCreating);
+  const { isCreating, createCabin } = useCreateCabin();
+
   const {
     id: cabinId,
     name,
@@ -94,7 +80,11 @@ function CabinRow({ cabin }) {
             <Menus.Toggle id={cabinId} />
 
             <Menus.List id={cabinId}>
-              <Menus.Button onClick={handleDuplicate} icon={<HiSquare2Stack />}>
+              <Menus.Button
+                onClick={handleDuplicate}
+                icon={<HiSquare2Stack />}
+                disabled={isCreating}
+              >
                 Duplicate
               </Menus.Button>
 

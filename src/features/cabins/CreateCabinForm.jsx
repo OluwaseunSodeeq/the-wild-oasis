@@ -1,14 +1,14 @@
 import { useForm } from "react-hook-form";
 
+import { useCreateCabin } from "./useCreateCabin";
+import { useEditCabin } from "./useEditCabin";
+
 import Form from "../../ui/Form";
 import Input from "../../ui/Input";
 import { Textarea } from "../../ui/Textarea";
 import FormRow from "../../ui/FormRow";
 import FileInput from "../../ui/FileInput";
 import Button from "../../ui/Button";
-
-import { useCreateCabin } from "./useCreateCabin";
-import { useEditCabin } from "./useEditCabin";
 
 function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
   const { isCreating, createCabin } = useCreateCabin();
@@ -25,7 +25,6 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
 
   function onSubmit(data) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
-    console.log(data);
     if (isEditSession)
       editCabin(
         { newCabinData: { ...data, image }, id: editId },
