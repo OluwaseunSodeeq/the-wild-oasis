@@ -18,12 +18,14 @@ export async function getBoookings({ filter, sortBy, page }) {
     query = query.order(sortBy.field, {
       ascending: sortBy.direction === "asc",
     });
+
   if (page) {
     const from = (page - 1) * PAGE_SIZE;
     const to = from + PAGE_SIZE - 1;
     query = query.range(from, to);
   }
   const { data, error, count } = await query;
+
   if (error) {
     console.log(error);
     throw new Error("Bookings could not be loaded");
@@ -97,7 +99,7 @@ export async function getStaysTodayActivity() {
     console.error(error);
     throw new Error("Bookings could not get loaded");
   }
-  return { data };
+  return data;
 }
 
 export async function updateBooking(id, obj) {

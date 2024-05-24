@@ -1,13 +1,13 @@
 import styled from "styled-components";
-
-import DurationChart from "features/dashboard/DurationChart";
-import SalesChart from "features/dashboard/SalesChart";
-import Stats from "features/dashboard/Stats";
-import TodayActivity from "features/check-in-out/TodayActivity";
-import { useRecentBookings } from "features/dashboard/useRecentBookings";
-import Spinner from "ui/Spinner";
 import { useRecentStays } from "./useRecentStays";
-import { useCabins } from "features/cabins/useCabins";
+import { useRecentBookings } from "./useRecentBookings";
+
+import DurationChart from "../dashboard/DurationChart";
+import SalesChart from "../dashboard/SalesChart";
+import Stats from "../dashboard/Stats";
+import TodayActivity from "../check-in-out/TodayActivity";
+import Spinner from "../../ui/Spinner";
+import { useCabins } from "../cabins/usecabins";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
