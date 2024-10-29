@@ -54,6 +54,7 @@ const Button = styled.button`
 `;
 // compound Component
 // 1.
+
 const ModalContext = createContext();
 // 2.
 function Modal({ children }) {

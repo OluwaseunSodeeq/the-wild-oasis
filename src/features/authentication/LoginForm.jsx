@@ -10,10 +10,13 @@ import { useLogin } from "./useLogin";
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, isLoading } = useLogin();
+  const { login, isLoading } = useLogin(false);
+  console.log(login);
 
   function handleSubmit(e) {
     e.preventDefault();
+    console.log("Hello");
+
     if (!email || !password) return;
     login(
       { email, password },
@@ -25,7 +28,6 @@ function LoginForm() {
       }
     );
   }
-
   return (
     <Form onSubmit={handleSubmit}>
       <FormRowVertical label="Email address">
@@ -51,7 +53,7 @@ function LoginForm() {
         />
       </FormRowVertical>
       <FormRowVertical>
-        <Button size="large" disabled={isLoading}>
+        <Button type="submit" size="large" disabled={isLoading}>
           {!isLoading ? "Log in" : <SpinnerMini />}
         </Button>
       </FormRowVertical>
