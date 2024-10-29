@@ -9,7 +9,6 @@ export function useCreateCabin() {
     mutationFn: createEditCabin,
     onSuccess: () => {
       toast.success("New cabin successfully created");
-      //When you invalidate a query, it means that you're telling React Query to refetch the data for that query the next time it's requested.
       queryClient.invalidateQueries({ queryKey: ["cabins"] });
     },
     onError: (err) => toast.error(err.message),

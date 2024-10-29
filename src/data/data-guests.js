@@ -1,6 +1,6 @@
 // Search for: 'jo', 'fa', 'mar', 'emm', 'ah'
 
-export const guest = [
+export const guests = [
   {
     // id: 1000,
     fullName: "Jonas Schmedtmann",

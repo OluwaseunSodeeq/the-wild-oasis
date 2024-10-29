@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { isFuture, isPast, isToday } from "date-fns";
-
 import supabase from "../services/supabase";
-import { subtractDates } from "../utils/helpers";
 import Button from "../ui/Button";
-
+import { subtractDates } from "../utils/helpers";
+import { guests } from "./data-guests";
 import { cabins } from "./data-cabins";
-import { guest } from "./data-guests";
 import { bookings } from "./data-bookings";
+
+// import { bookings } from "./data-bookings";
+// import { cabins } from "./data-cabins";
+// import { guests } from "./data-guests";
+
 // const originalSettings = {
 //   minBookingLength: 3,
 //   maxBookingLength: 30,
@@ -15,9 +18,8 @@ import { bookings } from "./data-bookings";
 //   breakfastPrice: 15,
 // };
 
-// Delete
 async function deleteGuests() {
-  const { error } = await supabase.from("guest").delete().gt("id", 0);
+  const { error } = await supabase.from("guests").delete().gt("id", 0);
   if (error) console.log(error.message);
 }
 
@@ -31,9 +33,8 @@ async function deleteBookings() {
   if (error) console.log(error.message);
 }
 
-// Create
 async function createGuests() {
-  const { error } = await supabase.from("guest").insert(guest);
+  const { error } = await supabase.from("guests").insert(guests);
   if (error) console.log(error.message);
 }
 
@@ -45,7 +46,7 @@ async function createCabins() {
 async function createBookings() {
   // Bookings need a guestId and a cabinId. We can't tell Supabase IDs for each object, it will calculate them on its own. So it might be different for different people, especially after multiple uploads. Therefore, we need to first get all guestIds and cabinIds, and then replace the original IDs in the booking data with the actual ones from the DB
   const { data: guestsIds } = await supabase
-    .from("guest")
+    .from("guests")
     .select("id")
     .order("id");
   const allGuestIds = guestsIds.map((cabin) => cabin.id);
@@ -83,6 +84,7 @@ async function createBookings() {
       !isToday(new Date(booking.startDate))
     )
       status = "checked-in";
+
     return {
       ...booking,
       numNights,
@@ -95,11 +97,13 @@ async function createBookings() {
     };
   });
 
+  console.log(finalBookings);
+
   const { error } = await supabase.from("bookings").insert(finalBookings);
   if (error) console.log(error.message);
 }
 
-export function Uploader() {
+function Uploader() {
   const [isLoading, setIsLoading] = useState(false);
 
   async function uploadAll() {
@@ -139,12 +143,7 @@ export function Uploader() {
     >
       <h3>SAMPLE DATA</h3>
 
-      <Button
-        onClick={uploadAll}
-        // To prevent accidental clicks. Remove to run once!
-        disabled={isLoading}
-        // disabled={true}
-      >
+      <Button onClick={uploadAll} disabled={isLoading}>
         Upload ALL
       </Button>
 
@@ -154,3 +153,5 @@ export function Uploader() {
     </div>
   );
 }
+
+export default Uploader;
