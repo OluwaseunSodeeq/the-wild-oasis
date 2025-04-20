@@ -1,5 +1,14 @@
-function useDarkModee() {
-  return <div></div>;
+import { useContext } from "react";
+import { DarkModeContext } from "./DarkModeContext";
+
+function useDarkMode() {
+ 
+    const context = useContext(DarkModeContext);
+    if (context === undefined)
+      throw new Error("DarkModeContext was used outside of DarkModeProvider");
+    return context;
+
+  // return <div></div>;
 }
 
-export default useDarkModee;
+export default useDarkMode;

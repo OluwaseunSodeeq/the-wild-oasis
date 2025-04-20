@@ -40,6 +40,7 @@ const Cabin = styled.div`
   font-family: "Sono";
 `;
 
+
 const Price = styled.div`
   font-family: "Sono";
   font-weight: 600;

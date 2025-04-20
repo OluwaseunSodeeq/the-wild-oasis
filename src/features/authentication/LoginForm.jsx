@@ -10,17 +10,22 @@ function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, isLoading } = useLogin(false);
-  console.log(login);
 
   function handleSubmit(e) {
     e.preventDefault();
     console.log("Hello");
 
-    if (!email || !password) return;
+    // if (!email || !password) return console.log("return message!");
+    if (!email || !password) {
+      console.log("Email or password missing");
+      return;
+    }
+    
     login(
       { email, password },
       {
         onSettled: () => {
+          console.log("Login ooo", "");
           setEmail("");
           setPassword("");
         },

@@ -85,3 +85,7 @@ function App() {
 }
 
 export default App;
+
+
+// supabase password
+// wryvcvbnm,9876#$
