@@ -7,25 +7,22 @@ import Button from "../../ui/Button";
 import SpinnerMini from "../../ui/SpinnerMini";
 
 function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("hello@example.com");
+  const [password, setPassword] = useState("hello1234");
   const { login, isLoading } = useLogin(false);
 
   function handleSubmit(e) {
+    console.log("Clicked!");
     e.preventDefault();
-    console.log("Hello");
-
-    // if (!email || !password) return console.log("return message!");
     if (!email || !password) {
       console.log("Email or password missing");
       return;
     }
-    
+    // login({ email, password });
     login(
       { email, password },
       {
         onSettled: () => {
-          console.log("Login ooo", "");
           setEmail("");
           setPassword("");
         },
